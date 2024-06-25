@@ -1,6 +1,3 @@
-- name: hello
-  description: Say hello!
-
 - name: echo
   description: Echo message back to sender.
   options:
@@ -8,3 +5,37 @@
       description: The message to echo back.
       type: 3 # string
       required: true
+- name: help
+  description: Get infomation about commands.
+  options:
+    - name: command_name
+      description: The command name to up on.
+      type: 3 # string
+      required: false
+- name: find
+  description: Searches minecraft player's Hypixel Zombies profile.
+  options:
+    - name: map
+      description: The specific Zombies map to look for.
+      type: 3  # string
+      required: true
+    - name: mode
+      description: The specific mode for that Zombies map.
+      type: 3  # string
+      required: true
+    - name: username_1
+      description: The username of the 1st minecraft player.
+      type: 3  # string
+      required: true
+    - name: username_2
+      description: The username of the 2nd minecraft player.
+      type: 3  # string
+      required: false
+    - name: username_3
+      description: The username of the 3rd minecraft player.
+      type: 3  # string
+      required: false
+    - name: username_4
+      description: The username of the 4th minecraft player.
+      type: 3  # string
+      required: false
