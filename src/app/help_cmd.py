@@ -22,20 +22,27 @@ def make_help_embed(command: str = None):
                             "`/find [map] [mode] [username_1] ... [up_to_username_4]`\n"
                             "First 3 arguments are required to be filled and all arguments are NOT case sensitive\n\n"
                             
-                            "**Map and Mode Argument:\n**"
-                            "To get summary data for specified Zombies map or for all maps (map's input is g or equivalent)\n"
-                            "╰ Summary/General : `[g | gen | general | s | sum | summary]`\n\n"
-                            
                             "**Map Arguments:\n**"
-                            "╰ Dead End        : `[de | dead end | dead_end]`\n"
-                            "╰ Bad Blood       : `[bb | bad blood | bad_blood]`\n"
-                            "╰ Alien arcadium  : `[aa | arcadium | alien arcadium | alien_arcadium]`\n\n"
+                            "- General\n"
+                            "`[g | gen | general | s | sum | summary]`\n"
+                            "- Dead End\n"
+                            "`[de | dead end | dead_end]`\n"
+                            "- Bad Blood\n"
+                            "`[bb | bad blood | bad_blood]`\n"
+                            "- Alien arcadium"
+                            "`[aa | arcadium | alien arcadium | alien_arcadium]`\n\n"
                 
-                             "**Mode Arguments:\n**"
-                            "╰ Normal          : `[n | norm | normal]`\n"
-                            "╰ Hard            : `[h | hard]`\n"
-                            "╰ RIP             : `[r | rip]`\n"
-                            "╰ All             : `[a | all]`",
+                            "**Mode Arguments: only applicable Dead End and Bad Blood maps\n**"
+                            "- General\n"
+                            "`[g | gen | general | s | sum | summary]`\n"
+                            "- Normal\n" 
+                            "`[n | norm | normal]`\n"
+                            "- Hard\n" 
+                            "`[h | hard]`\n"
+                            "- RIP\n"
+                            "`[r | rip]`\n"
+                            "- All\n"
+                            "`[a | all]`",
             "color": 0x5865F2,  # Blurple color
         }
     else:

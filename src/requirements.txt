@@ -3,4 +3,3 @@ mangum
 asgiref
 discord-interactions
 requests
-discord

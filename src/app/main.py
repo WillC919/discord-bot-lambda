@@ -17,7 +17,7 @@ handler = Mangum(asgi_app)
 
 
 @app.route("/", methods=["POST"])
-@verify_key_decorator(DISCORD_PUBLIC_KEY)
+# @verify_key_decorator(DISCORD_PUBLIC_KEY)
 def interactions():
     try:
         print(f"👉 Request: {request.json}")
@@ -67,15 +67,20 @@ def interactions():
             embeds = []
             for player_name in data["options"][2:]:
                 player_data = hypixel_api.get_player_data(player_name["value"])
-                embed_list = find_cmd.make_player_data_embed_base(player_data, map_name, mode_tpye)
+                embed_list = find_cmd.make_player_data_embed_base(player_data, player_name["value"], map_name, mode_tpye)
                 
                 for embed in embed_list: 
                     embeds.append(embed)
-
+            
             response_data = {
                 "type": 4,
                 "data": {"embeds": embeds},
             }
+
+            # response_data = {
+            #     "type": 4,
+            #     "data": {"content": "It Works"},
+            # }
         else:
             response_data = {
                 "type": 4,

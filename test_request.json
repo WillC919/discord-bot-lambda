@@ -1,12 +1,22 @@
 {
   "data": {
     "id": "1138848110735527936",
-    "name": "echo",
+    "name": "find",
     "options": [
       {
-        "name": "message",
+        "name": "map",
         "type": 3,
-        "value": "this is a test message"
+        "value": "aa"
+      },
+      {
+        "name": "mode",
+        "type": 3,
+        "value": "g"
+      },
+      {
+        "name": "username_1",
+        "type": 3,
+        "value": "evilmortyc919"
       }
     ],
     "type": 1
@@ -14,5 +24,4 @@
   "token": "XXXXXX",
   "type": 2
 }
-
 
