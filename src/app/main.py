@@ -7,6 +7,7 @@ from discord_interactions import verify_key_decorator
 import hypixel_api
 import find_cmd
 import help_cmd
+import boto3
 
 DISCORD_PUBLIC_KEY = os.environ.get("DISCORD_PUBLIC_KEY")
 
@@ -15,9 +16,11 @@ app = Flask(__name__)
 asgi_app = WsgiToAsgi(app)
 handler = Mangum(asgi_app)
 
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table("hypixel-api-data-cache")
 
 @app.route("/", methods=["POST"])
-# @verify_key_decorator(DISCORD_PUBLIC_KEY)
+@verify_key_decorator(DISCORD_PUBLIC_KEY)
 def interactions():
     try:
         print(f"👉 Request: {request.json}")
@@ -63,24 +66,23 @@ def interactions():
                 "data": { "embeds": [embed] },
             }
         elif command_name == "find":
-            map_name, mode_tpye = data["options"][0]["value"], data["options"][1]["value"]
             embeds = []
-            for player_name in data["options"][2:]:
-                player_data = hypixel_api.get_player_data(player_name["value"])
-                embed_list = find_cmd.make_player_data_embed_base(player_data, player_name["value"], map_name, mode_tpye)
-                
-                for embed in embed_list: 
-                    embeds.append(embed)
             
+            formatted_args = find_cmd.format_args(data["options"][0]["value"], data["options"][1]["value"])
+            if not formatted_args: 
+                embeds = [find_cmd.make_error_embed(901, "Please specify a valid map and/or mode")]
+            else:
+                for player_name in data["options"][2:]:
+                    player_data = hypixel_api.get_player_data(player_name["value"])
+                    embed_list = find_cmd.make_player_data_embed_base(table, player_data, player_name["value"], formatted_args)
+                    
+                    for embed in embed_list: 
+                        embeds.append(embed)
+
             response_data = {
                 "type": 4,
                 "data": {"embeds": embeds},
             }
-
-            # response_data = {
-            #     "type": 4,
-            #     "data": {"content": "It Works"},
-            # }
         else:
             response_data = {
                 "type": 4,

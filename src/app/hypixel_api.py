@@ -8,6 +8,7 @@ PLAYER_API_LINK = f'https://api.hypixel.net/v2/player?key={HYPIXEL_API_KEY}&name
 GUILD_API_LINK = f'https://api.hypixel.net/v2/guild?key={HYPIXEL_API_KEY}&player='
 STATUS_API_LINK = f'https://api.hypixel.net/v2/status?key={HYPIXEL_API_KEY}&uuid='
 
+
 def get_player_data(username: str):
       player_data: dict = (requests.get(f'{PLAYER_API_LINK}{username}')).json()
       
@@ -43,7 +44,7 @@ def get_player_data(username: str):
             status_data = requests.get(f'{STATUS_API_LINK}{player_data["player"]["uuid"]}').json()
             if status_data['success'] and status_data['session']['online']:
                   game_type = format_name(status_data['session']['gameType'])
-                  formatted_player_data['Data']['Session'] = f"playing {game_type}:{format_name(status_data['session']['mode'])}"
+                  formatted_player_data['Data']['Session'] = f"in {game_type}: {format_name(status_data['session']['mode'])}"
             else: formatted_player_data['Data']['Session'] = "Offline"
       else: formatted_player_data['Data']['Session'] = "in Invisible Mode"
       
@@ -70,11 +71,8 @@ def get_player_data(username: str):
                         "Wins": fix_key_error(arcade_data, 'wins_zombies_deadend'),
                         "Kills": fix_key_error(arcade_data, 'zombie_kills_zombies_deadend'),
                         "Revives": fix_key_error(arcade_data, 'players_revived_zombies_deadend'),
-                        "Downs": fix_key_error(arcade_data, 'times_knocked_down_zombies_deadend'),
                         "Deaths": fix_key_error(arcade_data, 'deaths_zombies_deadend'),
                         "TRS": fix_key_error(arcade_data, 'total_rounds_survived_zombies_deadend'),
-                        "Doors": fix_key_error(arcade_data, 'doors_opened_zombies_deadend'),
-                        "Windows": fix_key_error(arcade_data, 'windows_repaired_zombies_deadend'),
                   },
                   "Normal": {
                         "Wins": fix_key_error(arcade_data, 'wins_zombies_deadend_normal'),
@@ -124,11 +122,8 @@ def get_player_data(username: str):
                         "Wins": fix_key_error(arcade_data, 'wins_zombies_badblood'),
                         "Kills": fix_key_error(arcade_data, 'zombie_kills_zombies_badblood'),
                         "Revives": fix_key_error(arcade_data, 'players_revived_zombies_badblood'),
-                        "Downs": fix_key_error(arcade_data, 'times_knocked_down_zombies_badblood'),
                         "Deaths": fix_key_error(arcade_data, 'deaths_zombies_badblood'),
                         "TRS": fix_key_error(arcade_data, 'total_rounds_survived_zombies_badblood'),
-                        "Doors": fix_key_error(arcade_data, 'doors_opened_zombies_badblood'),
-                        "Windows": fix_key_error(arcade_data, 'windows_repaired_zombies_badblood'),
                   },
                   "Normal": {
                         "Wins": fix_key_error(arcade_data, 'wins_zombies_badblood_normal'),
@@ -171,6 +166,57 @@ def get_player_data(username: str):
                         "TRS": fix_key_error(arcade_data, 'total_rounds_survived_zombies_badblood_rip'),
                         "Doors": fix_key_error(arcade_data, 'doors_opened_zombies_badblood_rip'),
                         "Windows": fix_key_error(arcade_data, 'windows_repaired_zombies_badblood_rip'),
+                  }
+            },
+            "Prison": {
+                  "General": {
+                        "Wins": fix_key_error(arcade_data, 'wins_zombies_prison'),
+                        "Kills": fix_key_error(arcade_data, 'zombie_kills_zombies_prison'),
+                        "Revives": fix_key_error(arcade_data, 'players_revived_zombies_prison'),
+                        "Deaths": fix_key_error(arcade_data, 'deaths_zombies_prison'),
+                        "TRS": fix_key_error(arcade_data, 'total_rounds_survived_zombies_prison'),
+                  },
+                  "Normal": {
+                        "Wins": fix_key_error(arcade_data, 'wins_zombies_prison_normal'),
+                        "BR": fix_key_error(arcade_data, 'best_round_zombies_prison_normal'),
+                        "FTB-R10": make_secs_readable(fix_key_error(arcade_data, 'fastest_time_10_zombies_prison_normal')),
+                        "FTB-R20": make_secs_readable(fix_key_error(arcade_data, 'fastest_time_20_zombies_prison_normal')),
+                        "FTB-R30": make_secs_readable(fix_key_error(arcade_data, 'fastest_time_30_zombies_prison_normal')),
+                        "Kills": fix_key_error(arcade_data, 'zombie_kills_zombies_prison_normal'),
+                        "Revives": fix_key_error(arcade_data, 'players_revived_zombies_prison_normal'),
+                        "Downs": fix_key_error(arcade_data, 'times_knocked_down_zombies_prison_normal'),
+                        "Deaths": fix_key_error(arcade_data, 'deaths_zombies_prison_normal'),
+                        "TRS": fix_key_error(arcade_data, 'total_rounds_survived_zombies_prison_normal'),
+                        "Doors": fix_key_error(arcade_data, 'doors_opened_zombies_prison_normal'),
+                        "Windows": fix_key_error(arcade_data, 'windows_repaired_zombies_prison_normal'),
+                  },
+                  "Hard": {
+                        "Wins": fix_key_error(arcade_data, 'wins_zombies_prison_hard'),
+                        "BR": fix_key_error(arcade_data, 'best_round_zombies_prison_hard'),
+                        "FTB-R10": make_secs_readable(fix_key_error(arcade_data, 'fastest_time_10_zombies_prison_hard')),
+                        "FTB-R20": make_secs_readable(fix_key_error(arcade_data, 'fastest_time_20_zombies_prison_hard')),
+                        "FTB-R30":make_secs_readable(fix_key_error(arcade_data, 'fastest_time_30_zombies_prison_hard')),
+                        "Kills": fix_key_error(arcade_data, 'zombie_kills_zombies_prison_hard'),
+                        "Revives": fix_key_error(arcade_data, 'players_revived_zombies_prison_hard'),
+                        "Downs": fix_key_error(arcade_data, 'times_knocked_down_zombies_prison_hard'),
+                        "Deaths": fix_key_error(arcade_data, 'deaths_zombies_prison_hard'),
+                        "TRS": fix_key_error(arcade_data, 'total_rounds_survived_zombies_prison_hard'),
+                        "Doors": fix_key_error(arcade_data, 'doors_opened_zombies_prison_hard'),
+                        "Windows": fix_key_error(arcade_data, 'windows_repaired_zombies_prison_hard'),
+                  },
+                  "RIP": {
+                        "Wins": fix_key_error(arcade_data, 'wins_zombies_prison_rip'),
+                        "BR": fix_key_error(arcade_data, 'best_round_zombies_prison_rip'),
+                        "FTB-R10": make_secs_readable(fix_key_error(arcade_data, 'fastest_time_10_zombies_prison_rip')),
+                        "FTB-R20": make_secs_readable(fix_key_error(arcade_data, 'fastest_time_20_zombies_prison_rip')),
+                        "FTB-R30": make_secs_readable(fix_key_error(arcade_data, 'fastest_time_30_zombies_prison_rip')),
+                        "Kills": fix_key_error(arcade_data, 'zombie_kills_zombies_prison_rip'),
+                        "Revives": fix_key_error(arcade_data, 'players_revived_zombies_prison_rip'),
+                        "Downs": fix_key_error(arcade_data, 'times_knocked_down_zombies_prison_rip'),
+                        "Deaths": fix_key_error(arcade_data, 'deaths_zombies_prison_rip'),
+                        "TRS": fix_key_error(arcade_data, 'total_rounds_survived_zombies_prison_rip'),
+                        "Doors": fix_key_error(arcade_data, 'doors_opened_zombies_prison_rip'),
+                        "Windows": fix_key_error(arcade_data, 'windows_repaired_zombies_prison_rip'),
                   }
             },
             "Alien Arcadium": {

@@ -35,7 +35,3 @@
       description: The username of the 3rd minecraft player.
       type: 3  # string
       required: false
-    - name: username_4
-      description: The username of the 4th minecraft player.
-      type: 3  # string
-      required: false
