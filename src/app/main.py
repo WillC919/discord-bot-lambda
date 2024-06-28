@@ -3,11 +3,10 @@ from flask import Flask, jsonify, request
 from mangum import Mangum
 from asgiref.wsgi import WsgiToAsgi
 from discord_interactions import verify_key_decorator
-
-import hypixel_api
-import find_cmd
-import help_cmd
 import boto3
+
+import cmd_interact
+
 
 DISCORD_PUBLIC_KEY = os.environ.get("DISCORD_PUBLIC_KEY")
 
@@ -30,64 +29,31 @@ def interactions():
             print("Received PING")
             return jsonify({"type": 1})  # PONG
         
-        data = raw_request.get("data")
-        if not data:
-            raise ValueError("Data field is missing in request.")
+        if raw_request["type"] == 3:  # Component (Button) Interaction
+            command_args = raw_request["data"]["custom_id"].split('-')
+            if command_args[0] == "find":
+                response_data = { "type": 7, } # Update the message
+                return_data = cmd_interact.find(table, command_args[1], command_args[2], command_args[3], True)
+                response_data["data"] = return_data
+                return jsonify(response_data)
         
+        
+        data = raw_request.get("data")
+        if not data: raise ValueError("Data field is missing in request.")
         command_name = data.get("name")
-        if not command_name:
-            raise ValueError("Command name is missing in request data.")
+        if not command_name: raise ValueError("Command name is missing in request data.")
 
+        response_data = { "type": 4, }
         if command_name == "echo":
-            original_message = data["options"][0]["value"]
-            
-            embed = {
-                "title": "Poly the parrot",
-                "description": f"Echo: {original_message}",
-                "color": 0x5865F2,  # Blurple color
-                "thumbnail": {
-                    "url": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/de/Red_Parrot.png/revision/latest?cb=20170720112713"
-                },
-            }
-
-            response_data = {
-                "type": 4,
-                "data": { "embeds": [embed] },
-            }
+            return_data = cmd_interact.echo(data)
+            response_data["data"] = return_data
         elif command_name == "help":
-            embed = {}
-            if "options" in data and data["options"]: 
-                embed = help_cmd.make_help_embed(data["options"][0]["value"])
-            else: 
-                embed = help_cmd.make_help_embed()
-            
-            response_data = {
-                "type": 4,
-                "data": { "embeds": [embed] },
-            }
+            return_data = cmd_interact.help(data)
+            response_data["data"] = return_data
         elif command_name == "find":
-            embeds = []
-            
-            formatted_args = find_cmd.format_args(data["options"][0]["value"], data["options"][1]["value"])
-            if not formatted_args: 
-                embeds = [find_cmd.make_error_embed(901, "Please specify a valid map and/or mode")]
-            else:
-                for player_name in data["options"][2:]:
-                    player_data = hypixel_api.get_player_data(player_name["value"])
-                    embed_list = find_cmd.make_player_data_embed_base(table, player_data, player_name["value"], formatted_args)
-                    
-                    for embed in embed_list: 
-                        embeds.append(embed)
-
-            response_data = {
-                "type": 4,
-                "data": {"embeds": embeds},
-            }
-        else:
-            response_data = {
-                "type": 4,
-                "data": {"content": "Unknown command"},
-            }
+            return_data = cmd_interact.find(table, data["options"][0]["value"], data["options"][1]["value"], data["options"][2]["value"], False)
+            response_data["data"] = return_data
+        else: response_data["data"] = {"content": "Unknown command"}
 
         return jsonify(response_data)
     except Exception as e:
