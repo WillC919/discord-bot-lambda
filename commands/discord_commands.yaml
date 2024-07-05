@@ -15,23 +15,7 @@
 - name: find
   description: Searches minecraft player's Hypixel Zombies profile.
   options:
-    - name: map
-      description: The specific Zombies map to look for.
+    - name: username
+      description: The username of the minecraft player.
       type: 3  # string
       required: true
-    - name: mode
-      description: The specific mode for that Zombies map.
-      type: 3  # string
-      required: true
-    - name: username_1
-      description: The username of the 1st minecraft player.
-      type: 3  # string
-      required: true
-    - name: username_2
-      description: The username of the 2nd minecraft player.
-      type: 3  # string
-      required: false
-    - name: username_3
-      description: The username of the 3rd minecraft player.
-      type: 3  # string
-      required: false

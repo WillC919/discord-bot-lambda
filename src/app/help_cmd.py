@@ -18,35 +18,15 @@ def make_help_embed(command: str = None):
     elif command == "find":
         embed = {
             "title": "/find command",
-            "color": 0x5865F2,  # Blurple color
-            "description": "Looks up the player's Zombies stats based on given arguments.\n"
-                            "`/find [map] [mode] [username_1] [username_2] [username_3]`\n"
-                            "The last 2 arguments are optional. All arguments are NOT case-sensitive.\n\n",
-            "fields": [
-                {"name": "Map Arguments:", "value": ""},
-                {"name": "General", "value": "`[g | gen | general]`", "inline": True},
-                {"name": "Dead End", "value": "`[de | dead end | dead_end]`", "inline": True},
-                {"name": "", "value": ""},
-                {"name": "Bad Blood", "value": "`[bb | bad blood | bad_blood]`", "inline": True},
-                {"name": "Alien arcadium", "value": "`[aa | arcadium | alien arcadium | alien_arcadium]`", "inline": True},
-                {"name": "", "value": ""},
-                {"name": "Prison", "value": "`[p | pr | prison]`", "inline": True},
-                
-                {"name": "Mode Arguments:", "value": ""},
-                {"name": "General", "value": "`[g | gen | general]`", "inline": True},
-                {"name": "Normal", "value": "`[n | norm | normal]`", "inline": True},
-                {"name": "", "value": ""},
-                {"name": "Hard", "value": "`[h | hard]`", "inline": True},
-                {"name": "RIP", "value": "`[r | rip]`", "inline": True},
-                {"name": "", "value": ""},
-                {"name": "Bad Blood", "value": "`[bb | bad blood | bad_blood]`", "inline": True},
-            ],
+            "color": 0x5865F2,
+            "description": "Looks up the player's Zombies data on Hypixel's Database.\n"
+                            "`/find [username]`\n",
             "footer": { "text": "Bot is NOT affiliated or endorsed by Hypixel" },
         }
     elif command == "help":
         embed = {
             "title": "/help command",
-            "color": 0x5865F2,  # Blurple color
+            "color": 0x5865F2,
             "description": "Provides a list of commands or additional information on specified commands.\n"
                             "`/help [command_name]`\n",
             "footer": { "text": "Bot is NOT affiliated or endorsed by Hypixel" },
@@ -54,7 +34,7 @@ def make_help_embed(command: str = None):
     elif command == "echo":
         embed = {
             "title": "/echo command",
-            "color": 0x5865F2,  # Blurple color
+            "color": 0x5865F2,
             "description": "Echos back inputted message from server/ mainly used for testing by developer.\n"
                             "`/help [command_name]`\n",
             "footer": { "text": "Bot is NOT affiliated or endorsed by Hypixel" },

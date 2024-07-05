@@ -4,17 +4,7 @@
     "name": "find",
     "options": [
       {
-        "name": "map",
-        "type": 3,
-        "value": "g"
-      },
-      {
-        "name": "mode",
-        "type": 3,
-        "value": "g"
-      },
-      {
-        "name": "username_1",
+        "name": "username",
         "type": 3,
         "value": "EvilMortyC919"
       }

@@ -1,4 +1,5 @@
 import os
+import traceback
 from flask import Flask, jsonify, request
 from mangum import Mangum
 from asgiref.wsgi import WsgiToAsgi
@@ -33,7 +34,7 @@ def interactions():
             command_args = raw_request["data"]["custom_id"].split('-')
             if command_args[0] == "find":
                 response_data = { "type": 7, } # Update the message
-                return_data = cmd_interact.find(table, command_args[1], command_args[2], command_args[3], True)
+                return_data = cmd_interact.find(table, command_args[1], command_args[2:], True)
                 response_data["data"] = return_data
                 return jsonify(response_data)
         
@@ -51,13 +52,15 @@ def interactions():
             return_data = cmd_interact.help(data)
             response_data["data"] = return_data
         elif command_name == "find":
-            return_data = cmd_interact.find(table, data["options"][0]["value"], data["options"][1]["value"], data["options"][2]["value"], False)
+            return_data = cmd_interact.find(table, data["options"][0]["value"], [], False)
             response_data["data"] = return_data
         else: response_data["data"] = {"content": "Unknown command"}
 
         return jsonify(response_data)
     except Exception as e:
+        traceback_str = traceback.format_exc()
         print(f"Error: {e}")
+        print(traceback_str)
         return jsonify({"type": 4, "data": {"content": f"An error occurred: {str(e)}"}})
 
 if __name__ == "__main__":
