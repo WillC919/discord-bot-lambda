@@ -6,4 +6,4 @@ The bot utilizes the [Discord Interactions Endpoint](https://discord.com/develop
 
 The application is built with [Flask](https://flask.palletsprojects.com/) to create an HTTP server. The server is hosted on AWS Lambda using a Docker container, managed with [AWS CDK](https://aws.amazon.com/cdk/).
 
-To use the bot, the Discord application's interactions endpoint is set to the URL of the hosted server on your [Discord Developer Portal](https://discord.com/developers/applications).
+To use the bot, the Discord application's interactions endpoint is set to the URL of the hosted server on [Discord Developer Portal](https://discord.com/developers/applications).
